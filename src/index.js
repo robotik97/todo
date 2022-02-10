@@ -3,24 +3,19 @@ import ReactDOM from "react-dom";
 
 import SearchPanel from "./components/search-panel";
 import AppHeader from "./components/app-header";
-
-const ToDoList = () => {
-  const items = ["learn react", "build app"];
-  return (
-    <ul>
-      <li>Learn React</li>
-      <li>Build App</li>
-      <li>Make awesome app</li>
-    </ul>
-  );
-};
+import ToDoList from "./components/to-do-list";
 
 const App = () => {
+  const toDoData = [
+    { label: "Eat burger", important: false, id: "1" },
+    { label: "Build awesome app", important: true, id: "2" },
+    { label: "Sleep", important: false, id: "3" },
+  ];
   return (
     <div>
       <AppHeader />
       <SearchPanel />
-      <ToDoList />
+      <ToDoList todos={toDoData} />
     </div>
   );
 };
