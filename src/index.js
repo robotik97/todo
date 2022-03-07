@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import SearchPanel from "./components/search-panel";
 import AppHeader from "./components/app-header";
 import ToDoList from "./components/to-do-list";
+import ItemStatusFilter from "./components/item-status-filter";
+import "./index.css";
 
 const App = () => {
   const toDoData = [
@@ -12,9 +14,10 @@ const App = () => {
     { label: "Sleep", important: false, id: "3" },
   ];
   return (
-    <div>
+    <div className="todo-app">
       <AppHeader />
       <SearchPanel />
+      <ItemStatusFilter/>
       <ToDoList todos={toDoData} />
     </div>
   );
