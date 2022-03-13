@@ -3,6 +3,7 @@ button {
   margin: 3px;
 }
 .todo-list-item {
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

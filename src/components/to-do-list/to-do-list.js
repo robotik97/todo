@@ -3,6 +3,7 @@ import ToDoListItem from "../to-do-list-item";
 import "./to-do-list.css"
 
 const ToDoList = ({ todos }) => {
+  
   const elements = todos.map((item) => {
     const { id, ...itemProps } = item;
     return (
