@@ -7,17 +7,25 @@ export default class ToDoListItem extends Component {
     important:false
   }
   onLabelClick = () => {
-    this.setState((state) => {
+    // we transfer only changes to the set state.
+    // set state does not accept full values,
+    //  but only those that need to be changed.
+    // so that the current state depends on the
+    //  previous one, we add a function. 
+    //  The argument is the current state.---
+    this.setState(({done}) => {
       return {
-        done: !state.done
+        done: !done
       }
     })
   };
-
+  // if the current state depends on the previous one
+  // we needed write this - this.setState( (state))=>...
+  // or make destructuring like this - this.setState( ({important}) =>... 
   onMarkImportant = () => {
-    this.setState( (state) =>{
+    this.setState( ({important}) =>{
       return {
-        important: !state.important
+        important: !important
       }
     })
   } 
@@ -27,12 +35,14 @@ export default class ToDoListItem extends Component {
     // props.label = {label}
     // props.important = {important}
     // change color and font weight item if it important
-    const { label} = this.props;
+    const { label, onDeleted} = this.props;
     const {done, important} = this.state;
   
     let classNames = "todo-list-item";
     // done & important take from the state
     if (done) {
+      // add a space so that the new class is correctly
+      //  displayed when the button is clicked
       classNames += " done";
     }
     if (important) {
@@ -54,7 +64,8 @@ export default class ToDoListItem extends Component {
           </button>
           <button
             type="button"
-            className="btn btn-outline-danger btn-sm float-right">
+            className="btn btn-outline-danger btn-sm float-right"
+            onClick={onDeleted}>
             <i className="fa-solid fa-trash-can"></i>
           </button>
         </span>
