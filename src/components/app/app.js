@@ -13,12 +13,14 @@ export default class App extends Component {
 
   state = {
     toDoData: [
-      this.createTodoItem("Eat burger"),
-      this.createTodoItem("Build awesome app"),
+      this.createTodoItem("Learn English"),
+      this.createTodoItem("Get a dream job"),
       this.createTodoItem("Sleep"),
     ],
+    term: "",
+    filter: "",
   };
-  
+
   createTodoItem(label) {
     return {
       label,
@@ -79,22 +81,54 @@ export default class App extends Component {
     });
   };
 
+  search(items, term) {
+    if (term.length === 0) {
+      return items;
+    }
+    return items.filter((item) => {
+      return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+    });
+  }
+  onFilterChange = (filter) => {
+    this.setState({ filter });
+  };
+  onSearchChange = (term) => {
+    this.setState({ term });
+  };
+
+  filter(items, filter) {
+    switch (filter) {
+      case "all":
+        return items;
+      case "active":
+        return items.filter((item) => !item.done);
+      case "done":
+        return items.filter((item) => item.done);
+      default:
+        return items;
+    }
+  }
   render() {
-    const { toDoData } = this.state;
+    const { toDoData, term, filter } = this.state;
+    // filter the search result (first search, then filter)
+    const visibleItems = this.filter(this.search(toDoData, term), filter);
     const doneCount = toDoData.filter((el) => el.done).length;
     const toDoCount = toDoData.length - doneCount;
     return (
       <div className="todo-app">
         <AppHeader toDo={toDoCount} done={doneCount} />
-        <SearchPanel />
-        <ItemStatusFilter />
+        <SearchPanel onSearchChange={this.onSearchChange} />
+        <ItemStatusFilter
+          filter={filter}
+          onFilterChange={this.onFilterChange}
+        />
         <ToDoList
-          todos={toDoData}
+          todos={visibleItems}
           onDeleted={this.deleteItem}
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
         />
-        <ItemAddForm onItemAdded={this.addItem} />
+        <ItemAddForm className="d-flex" onItemAdded={this.addItem} />
       </div>
     );
   }
