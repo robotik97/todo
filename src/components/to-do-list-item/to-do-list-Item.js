@@ -72,6 +72,7 @@ export default class ToDoListItem extends Component {
             type="button"
             className="btn btn-outline-danger btn-sm float-right"
             onClick={onDeleted}
+            // the same {this.props.onDeleted}
           >
             <i className="fa-solid fa-trash-can"></i>
           </button>
